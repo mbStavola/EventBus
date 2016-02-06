@@ -35,6 +35,7 @@ public class EventBusBuilder {
     boolean sendNoSubscriberEvent = true;
     boolean throwSubscriberException;
     boolean eventInheritance = true;
+    boolean eventDeclaration = true;
     boolean ignoreGeneratedIndex;
     boolean strictMethodVerification;
     ExecutorService executorService = DEFAULT_EXECUTOR_SERVICE;
@@ -93,6 +94,14 @@ public class EventBusBuilder {
         return this;
     }
 
+    /**
+     * By default, EventBus requires that a registered class declare subscribing methods.
+     * Switching this feature off will allow EventBus to declare subscribing methods at the subclass level.
+     */
+    public EventBusBuilder eventDeclaration(boolean eventDeclaration) {
+        this.eventDeclaration = eventDeclaration;
+        return this;
+    }
 
     /**
      * Provide a custom thread pool to EventBus used for async and background event delivery. This is an advanced

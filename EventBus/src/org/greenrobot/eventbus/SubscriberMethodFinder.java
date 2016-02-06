@@ -52,7 +52,7 @@ class SubscriberMethodFinder {
         this.ignoreGeneratedIndex = ignoreGeneratedIndex;
     }
 
-    List<SubscriberMethod> findSubscriberMethods(Class<?> subscriberClass) {
+    List<SubscriberMethod> findSubscriberMethods(Class<?> subscriberClass, boolean eventDeclaration) {
         List<SubscriberMethod> subscriberMethods = METHOD_CACHE.get(subscriberClass);
         if (subscriberMethods != null) {
             return subscriberMethods;
@@ -63,7 +63,7 @@ class SubscriberMethodFinder {
         } else {
             subscriberMethods = findUsingInfo(subscriberClass);
         }
-        if (subscriberMethods.isEmpty()) {
+        if (eventDeclaration && subscriberMethods.isEmpty()) {
             throw new EventBusException("Subscriber " + subscriberClass
                     + " and its super classes have no public methods with the @Subscribe annotation");
         } else {

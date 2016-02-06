@@ -71,6 +71,7 @@ public class EventBus {
     private final boolean sendSubscriberExceptionEvent;
     private final boolean sendNoSubscriberEvent;
     private final boolean eventInheritance;
+    private final boolean eventDeclaration;
 
     private final int indexCount;
 
@@ -120,6 +121,7 @@ public class EventBus {
         sendNoSubscriberEvent = builder.sendNoSubscriberEvent;
         throwSubscriberException = builder.throwSubscriberException;
         eventInheritance = builder.eventInheritance;
+        eventDeclaration = builder.eventDeclaration;
         executorService = builder.executorService;
     }
 
@@ -133,7 +135,7 @@ public class EventBus {
      */
     public void register(Object subscriber) {
         Class<?> subscriberClass = subscriber.getClass();
-        List<SubscriberMethod> subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);
+        List<SubscriberMethod> subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass, eventDeclaration);
         synchronized (this) {
             for (SubscriberMethod subscriberMethod : subscriberMethods) {
                 subscribe(subscriber, subscriberMethod);
